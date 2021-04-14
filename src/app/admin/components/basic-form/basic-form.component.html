@@ -1,14 +1,24 @@
 <h1>Input Text</h1>
 <p>
-  Name: {{ nameField.value }}
+  Name: {{ nameField.value }} {{ nameField.valid }}
   <input type="text"  [formControl]="nameField"/>
 
-  <button (click)="getNameValue()">Get Value</button>
+  <button [disabled]="nameField.invalid" (click)="getNameValue()">Get Value</button>
   <!-- <code>
     <pre>
       {{ nameField | json }}
     </pre>
   </code> -->
+</p>
+
+<p>
+  <!-- touched permite capturar si el input fue tocado -->
+  <strong *ngIf="nameField.touched && nameField.hasError('required')">Este campo es requerido</strong>
+</p>
+
+<p>
+  <!-- touched permite capturar si el input fue tocado -->
+  <strong *ngIf="nameField.touched && nameField.hasError('maxlength')">debe tener maximo 10 c</strong>
 </p>
 
 <p>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // FormControl: Componente mas atomico la pieza fundamental de los formularios reactivos
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-form',
@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 })
 export class BasicFormComponent implements OnInit {
 
-  nameField = new FormControl('');
+  nameField = new FormControl('', [Validators.required, Validators.maxLength(10)]); // implementando 2 validaciones
   emailField = new FormControl('');
   phoneField = new FormControl('');
   colorField = new FormControl('#000000');
