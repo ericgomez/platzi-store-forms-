@@ -1,3 +1,4 @@
+<h1>Input Text</h1>
 <p>
   Name: {{ nameField.value }}
   <input type="text"  [formControl]="nameField"/>
@@ -71,6 +72,29 @@
   Description: {{ descriptionField.value }}
   <textarea type="text" [formControl]="descriptionField">
   </textarea>
+</p>
+
+<h1>Selects</h1>
+
+<p>
+  Category: {{ categoryField.value }}
+  <select [formControl]="categoryField">
+    <option value="category-1">Category 1</option>
+    <option value="category-2">Category 2</option>
+    <option value="category-3">Category 3</option>
+    <option value="category-4">Category 4</option>
+  </select>
+</p>
+
+<p>
+  Tags: {{ tagField.value }}
+  <!-- Select con muliple opcion-->
+  <select [formControl]="tagField" multiple>
+    <option value="tag-1">Tag 1</option>
+    <option value="tag-2">Tag 2</option>
+    <option value="tag-3">Tag 3</option>
+    <option value="tag-4">Tag 4</option>
+  </select>
 </p>
 
 
