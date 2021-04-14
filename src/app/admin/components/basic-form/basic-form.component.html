@@ -17,15 +17,18 @@
 
   <h1>Input Text</h1>
 
+  <!-- Corresponde a los mensajes -->
   <div class="messages" [class.active]="isNameFieldInvalid">
     <p>
-      <!-- touched permite capturar si el input fue tocado -->
-      <strong *ngIf="nameField.touched && nameField.hasError('required')">Este campo es requerido</strong>
+      <strong *ngIf="nameField.hasError('required')">Este campo es requerido</strong>
     </p>
 
     <p>
-      <!-- touched permite capturar si el input fue tocado -->
-      <strong *ngIf="nameField.touched && nameField.hasError('maxlength')">debe tener maximo 10 c</strong>
+      <strong *ngIf="nameField.hasError('maxlength')">debe tener maximo 10 c</strong>
+    </p>
+
+    <p>
+      <strong *ngIf="nameField.hasError('pattern')">No debe tener carac..</strong>
     </p>
   </div>
 
@@ -34,11 +37,43 @@
     <input type="email"  formControlName="email"/>
   </p>
 
+  <!-- Corresponde a los mensajes -->
+  <div class="messages" [class.active]="emailField.touched && phoneField.invalid">
+    <p>
+      <strong *ngIf="emailField.hasError('required')">
+        Este campo es requerido
+      </strong>
+    </p>
+    <p>
+      <strong *ngIf="emailField.hasError('email')">
+        Esto no es un emial valido
+      </strong>
+    </p>
+  </div>
+
+  <p>
+    Age: {{ ageField.value }}
+    <input type="number" formControlName="age"/>
+  </p>
+
+  <div class="messages" [class.active]="ageField.touched && ageField.invalid">
+    <p>
+      <strong *ngIf="ageField.hasError('required')">Este campo es requerido</strong>
+    </p>
+    <p>
+      <strong *ngIf="ageField.hasError('min')">Debe ser mayor de edad</strong>
+    </p>
+    <p>
+      <strong *ngIf="ageField.hasError('max')">Debe ser menor de 100 años</strong>
+    </p>
+  </div>
+
   <p>
     Phone: {{ phoneField.value }}
     <input type="tel"  formControlName="phone"/>
   </p>
 
+  <!-- Corresponde a los mensajes -->
   <div class="messages" [class.active]="phoneField.touched && phoneField.invalid">
     <p>
       <strong *ngIf="phoneField.touched && phoneField.hasError('required')">Este campo es requerido</strong>
@@ -58,11 +93,6 @@
   <p>
     Month: {{ monthField.value }}
     <input type="month" formControlName="month"/>
-  </p>
-
-  <p>
-    Age: {{ ageField.value }}
-    <input type="number" formControlName="age"/>
   </p>
 
   <p>

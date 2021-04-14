@@ -51,13 +51,13 @@ export class BasicFormComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(10)]], // implementando 2 validaciones
-      email: [''],
+      name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]], // implementando 2 validaciones
+      email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       color: ['#000000'],
       date: [''],
       month: [''],
-      age: [12],
+      age: [18, [Validators.required, Validators.min(18), Validators.max(100)]],
       password: [''],
       price: ['50'],
       week: [''],
@@ -70,7 +70,7 @@ export class BasicFormComponent implements OnInit {
       tag: [''],
     
       // Checkbox
-      agree: [false],
+      agree: [false, [Validators.requiredTrue]],
       gender: [''],
       zone: [''],
     })
