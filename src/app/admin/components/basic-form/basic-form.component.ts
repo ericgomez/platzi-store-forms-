@@ -22,16 +22,16 @@ export class BasicFormComponent implements OnInit {
   ngOnInit(): void {
     // El metodo valueChanges se suscribe al valor que vaya cambiando y se vuelve un listener
     // en tiempo real pero en TypeScript
-    this.nameField.valueChanges
-      .subscribe(value => {
-        console.log(value);
-      });
+    // this.nameField.valueChanges
+    //  .subscribe(value => {
+    //    console.log(value);
+    //  });
 
-      // Escuchando los cambios de forma reactiva
-      this.form.valueChanges
-      .subscribe(value => {
-        console.log(value);
-      });
+    // Escuchando los cambios de forma reactiva
+    // this.form.valueChanges
+    //  .subscribe(value => {
+    //    console.log(value);
+    //  });
   }
 
   //Obtener el valor del input en el browser
@@ -51,7 +51,10 @@ export class BasicFormComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]], // implementando 2 validaciones
+      fullName: this.formBuilder.group({
+        name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]],
+        last: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]]
+      }),
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       color: ['#000000'],
@@ -77,7 +80,11 @@ export class BasicFormComponent implements OnInit {
   }
 
   get nameField() {
-    return this.form.get('name');
+    return this.form.get('fullName.name');
+  }
+
+  get lastField() {
+    return this.form.get('fullName.last');
   }
 
   // Funciones para validaciones
