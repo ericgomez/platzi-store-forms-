@@ -28,6 +28,11 @@ export class BasicFormComponent implements OnInit {
   categoryField = new FormControl('category-2');
   tagField = new FormControl('');
 
+  // Checkbox
+  agreeField = new FormControl(false);
+  genderField = new FormControl('');
+  zoneField = new FormControl('');
+
   constructor() { }
 
   ngOnInit(): void {
