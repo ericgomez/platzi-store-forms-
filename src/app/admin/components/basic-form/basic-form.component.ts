@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // FormControl: Componente mas atomico la pieza fundamental de los formularios reactivos
-import { FormControl, Validators, FormGroup  } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-form',
@@ -10,32 +10,14 @@ import { FormControl, Validators, FormGroup  } from '@angular/forms';
 })
 export class BasicFormComponent implements OnInit {
 
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.maxLength(10)]), // implementando 2 validaciones
-    email: new FormControl(''),
-    phone: new FormControl(''),
-    color: new FormControl('#000000'),
-    date: new FormControl(''),
-    month: new FormControl(''),
-    age: new FormControl(12),
-    password: new FormControl(''),
-    price: new FormControl('50'),
-    week: new FormControl(''),
-    time: new FormControl(''),
-    search: new FormControl(''),
-    description: new FormControl(''),
-  
-    // Selects 
-    category: new FormControl('category-2'),
-    tag: new FormControl(''),
-  
-    // Checkbox
-    agree: new FormControl(false),
-    gender: new FormControl(''),
-    zone: new FormControl(''),
-  })
+  form: FormGroup;
 
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder
+  ) {
+    // Crear el formulario
+    this.buildForm();
+   }
 
   ngOnInit(): void {
     // El metodo valueChanges se suscribe al valor que vaya cambiando y se vuelve un listener
@@ -43,7 +25,13 @@ export class BasicFormComponent implements OnInit {
     this.nameField.valueChanges
       .subscribe(value => {
         console.log(value);
-      })
+      });
+
+      // Escuchando los cambios de forma reactiva
+      this.form.valueChanges
+      .subscribe(value => {
+        console.log(value);
+      });
   }
 
   //Obtener el valor del input en el browser
@@ -52,7 +40,40 @@ export class BasicFormComponent implements OnInit {
   }
 
   save(event) {
-    console.log(this.form.value);
+    // Accion despues de precionar el boton
+    if (this.form.valid){
+      console.log(this.form.value);
+    } else {
+      // Marcamos todos los campos como touched
+      this.form.markAllAsTouched();
+    }
+  }
+
+  private buildForm() {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(10)]], // implementando 2 validaciones
+      email: [''],
+      phone: ['', Validators.required],
+      color: ['#000000'],
+      date: [''],
+      month: [''],
+      age: [12],
+      password: [''],
+      price: ['50'],
+      week: [''],
+      time: [''],
+      search: [''],
+      description: [''],
+    
+      // Selects 
+      category: ['category-2'],
+      tag: [''],
+    
+      // Checkbox
+      agree: [false],
+      gender: [''],
+      zone: [''],
+    })
   }
 
   get nameField() {
