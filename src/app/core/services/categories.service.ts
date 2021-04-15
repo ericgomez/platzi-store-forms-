@@ -20,6 +20,11 @@ export class CategoriesService {
     return this.http.get<Category[]>(`${environment.url_api}/categories/`);
   }
 
+  getCategory(id: string) {
+    return this.http.get<Category>(`${environment.url_api}/categories/${id}`);
+  }
+
+
   // Creamos una categorias desde la API
   createCategory(data: Partial<Category>) {
     return this.http.post<Category>(`${environment.url_api}/categories/`, data);
@@ -27,7 +32,7 @@ export class CategoriesService {
 
   // Actualizamos una categoria desde la API
   updateCategory(id: string, data: Partial<Category>) {
-    return this.http.post<Category>(`${environment.url_api}/categories/${id}`, data);
+    return this.http.put<Category>(`${environment.url_api}/categories/${id}`, data);
   }
 
   //Checar si el nombre esta disponible para la categoria
