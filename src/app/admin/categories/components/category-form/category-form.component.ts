@@ -7,6 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { CategoriesService } from './../../../../core/services/categories.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 
+import { MyValidators } from './../../../../utils/validators';
+
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
@@ -30,8 +32,9 @@ export class CategoryFormComponent implements OnInit {
   }
 
   private buildForm() {
+    // Validaciones el el formulario
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(4)], MyValidators.validateCategory(this.categoriesService)],
       image: ['', Validators.required]
     });
   }
