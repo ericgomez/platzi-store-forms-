@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { CategoriesService } from './../../../../core/services/categories.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 import { MyValidators } from './../../../../utils/validators';
+import { Category } from './../../../../core/models/category.model';
+
+import { CategoriesService } from './../../../../core/services/categories.service';
 
 @Component({
   selector: 'app-category-form',
@@ -18,25 +19,27 @@ export class CategoryFormComponent implements OnInit {
 
   form: FormGroup;
   urlImage$: Observable<string>;
-  categoryId: string;
+  isNew = true;
+
+  @Input()
+  set category(data: Category) {
+    if (data) {
+      this.isNew = false;
+      this.form.patchValue(data);
+    }
+  }
+  @Output() create = new EventEmitter();
+  @Output() update = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
-    private categoriesService: CategoriesService,
-    private router: Router,
     private storage: AngularFireStorage,
-    private route: ActivatedRoute,
+    private categoriesService: CategoriesService,
   ) {
     this.buildForm();
    }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.categoryId = params.id;
-      if (this.categoryId) {
-        this.getCategory();
-      }
-    });
   }
 
   private buildForm() {
@@ -57,40 +60,14 @@ export class CategoryFormComponent implements OnInit {
 
   save() {
     if (this.form.valid) {
-      if (this.categoryId) {
-        this.updateCategory();
+      if (this.category) {
+        this.update.emit(this.form.value);
       } else {
-        this.createCategory();
+        this.create.emit(this.form.value);
       }
     } else {
       this.form.markAllAsTouched();
     }
-  }
-
-  // Metodo para crear una categoria si todo esta correcto
-  private createCategory() {
-    const data = this.form.value;
-    this.categoriesService.createCategory(data)
-    .subscribe(rta => {
-      // Redireccionamos a la ruta de Categorias
-      this.router.navigate(['/admin/categories']);
-    });
-  }
-
-  private updateCategory() {
-    const data = this.form.value;
-    this.categoriesService.updateCategory(this.categoryId, data)
-    .subscribe(rta => {
-      this.router.navigate(['/admin/categories']);
-    });
-  }
-
-  private getCategory() {
-    this.categoriesService.getCategory(this.categoryId)
-    .subscribe(data => {
-      // LLenamos el formulario con la data
-      this.form.patchValue(data);
-    });
   }
 
   uploadFile(event) {
