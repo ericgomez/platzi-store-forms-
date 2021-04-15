@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { CategoriesService } from './../../../../core/services/categories.service';
 
 @Component({
   selector: 'app-category-form',
@@ -12,6 +15,8 @@ export class CategoryFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private categoriesService: CategoriesService,
+    private router: Router
   ) {
     this.buildForm();
    }
@@ -32,6 +37,24 @@ export class CategoryFormComponent implements OnInit {
 
   get imageField() {
     return this.form.get('image');
+  }
+
+  save() {
+    if (this.form.valid) {
+      this.createCategory();
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  // Metodo para crear una categoria si todo esta correcto
+  private createCategory() {
+    const data = this.form.value;
+    this.categoriesService.createCategory(data)
+    .subscribe(rta => {
+      // Redireccionamos a la ruta de Categorias
+      this.router.navigate(['/admin/categories']);
+    });
   }
 
 }
