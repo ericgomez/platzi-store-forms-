@@ -60,10 +60,10 @@ export class CategoryFormComponent implements OnInit {
 
   save() {
     if (this.form.valid) {
-      if (this.category) {
-        this.update.emit(this.form.value);
-      } else {
+      if (this.isNew) {
         this.create.emit(this.form.value);
+      } else {
+        this.update.emit(this.form.value);
       }
     } else {
       this.form.markAllAsTouched();
