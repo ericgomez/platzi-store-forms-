@@ -1,26 +1,27 @@
-# PlatziStore
+# PlatziStoreForms
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.11.
+Curso de Angular Forms: Creación y Optimización de Formularios Web
+
+
+Presentación del proyecto: tour por los formularios de Platzi Store
+
+### Para ingresar al sistema pueden ingresar como admin:
+
+**User**: [nicolas@nicolas.com](mailto:nicolas@nicolas.com)
+
+**Pass**: nicolas.201
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### O crear tu propio usuario con /auth/register
 
-## Code scaffolding
+`http://localhost:4200/admin`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`http://localhost:4200/auth/login`
 
-## Build
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
